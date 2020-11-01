@@ -24,13 +24,13 @@ const useAudio = url => {
     return [playing, toggle];
 };
 
-const Player = ({ url }) => {
+const Player = ({ url, name }) => {
     const [playing, toggle] = useAudio(url);
     const classes = styles();
 
     return (
         <Button variant="outlined" className={classes.button}
-            onClick={toggle}>{playing ? "Pause" : "Play"}</Button>
+            onClick={toggle}>{playing ? `${name} (Pause)` : `${name} (Play)`}</Button>
     );
 };
 

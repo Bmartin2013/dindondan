@@ -1,25 +1,49 @@
-import React, { useState } from 'react';
-import { Container} from '@material-ui/core';
-import Player from '../../components/Player';
+import React, { useEffect, useState } from 'react';
+import { Button, Container } from '@material-ui/core';
+
 import FormikForm from '../../components/FormikForm';
+import Player from '../../components/Player';
 
 export default () => {
 
+	const [buttons, setButtons] = useState([]);
+
 	const initialValues = {
 		name: "",
-		songurl: ""
+		soundUrl: ""
 	};
 
+	const fieldValues = [{
+		name: "name",
+		id: "name",
+		label:"Button Name"
+	},{
+		name: "soundUrl",
+		id: "soundUrl",
+		label:"Sound URL"
+	}];
+
+	useEffect(() => {
+		if (buttons) {
+			console.log("CURRENT BUTTONS", buttons);
+		}
+
+	}, [buttons])
+
 	const onSubmit = (values) => {
-		// Do stuff here...
-		console.log(values);
-		alert(JSON.stringify(values, null, 2));
+		setButtons([...buttons, { ...values }]);
 	}
 
 	return (
 		<Container>
-			<Player url="https://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg"></Player>
-			<FormikForm initialValues={initialValues} onSubmit={onSubmit}></FormikForm>
+			{buttons.map((button,index) => <Player 
+			key={index}
+			name={button.name} 
+			url={button.soundUrl}></Player>)}
+			<FormikForm fieldValues={fieldValues}
+						initialValues={initialValues} 
+						onSubmit={onSubmit}>
+			</FormikForm>
 		</Container>
 	)
 }
