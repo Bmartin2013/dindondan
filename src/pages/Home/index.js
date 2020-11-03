@@ -7,8 +7,6 @@ import Player from '../../components/Player';
 export default () => {
 
 	const [buttons, setButtons] = useState([]);
-	const mockButton = [{ name: "Alarm button", soundUrl: 'https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg' }];
-
 
 	const initialValues = {
 		name: "",
@@ -26,23 +24,23 @@ export default () => {
 	}];
 
 	const saveButton = () => {
-		console.log("CURRENT BUTTONS", buttons);
 		localStorage.setItem(`buttons`, JSON.stringify(buttons));
-		console.log(localStorage);
 	}
 
 	const loadButtons = useCallback(() => {
-		setButtons([...buttons, ...mockButton]);
+		const savedButtons = JSON.parse(localStorage.getItem(`buttons`));
+		savedButtons && setButtons([...buttons, ...savedButtons]);
 	}, [buttons]);
 
 	const onSubmit = (values) => {
 		setButtons([...buttons, { ...values }]);
-		saveButton();
 	}
 
 	useEffect(() => {
 		buttons.length < 1 && loadButtons();
 	}, [])
+
+	useEffect(() => saveButton(), [buttons])
 
 	return (
 		<Container>
