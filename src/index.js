@@ -4,8 +4,6 @@ import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
 
-import configureStore from './redux/store';
-const store = configureStore();
 
-ReactDOM.render(<App store={store} />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

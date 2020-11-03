@@ -7,15 +7,13 @@ import Home from './pages/Home';
 import Layout from './components/Layout'
 import watermelon from './themes/watermelon'
 
-const App = ({ store }) => (
-	<Provider store={store}>
-		<ThemeProvider theme={watermelon}>
-			<Layout
-				appName="DinDonDan Keypad"
-				Home={Home}>
-			</Layout>
-		</ThemeProvider>
-	</Provider>
+const App = () => (
+	<ThemeProvider theme={watermelon}>
+		<Layout
+			appName="DinDonDan Keypad"
+			Home={Home}>
+		</Layout>
+	</ThemeProvider>
 );
 
 App.propTypes = {
