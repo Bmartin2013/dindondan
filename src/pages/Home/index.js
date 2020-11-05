@@ -5,8 +5,8 @@ import FormikForm from '../../components/FormikForm';
 import Player from '../../components/Player';
 
 export default () => {
-
 	const [buttons, setButtons] = useState([]);
+	const savedButtons = JSON.parse(localStorage.getItem(`buttons`));
 
 	const initialValues = {
 		name: "",
@@ -28,12 +28,12 @@ export default () => {
 	}
 
 	const loadButtons = useCallback(() => {
-		const savedButtons = JSON.parse(localStorage.getItem(`buttons`));
 		savedButtons && setButtons([...buttons, ...savedButtons]);
 	}, [buttons]);
 
-	const onSubmit = (values) => {
+	const onSubmit = (values, {resetForm}) => {
 		setButtons([...buttons, { ...values }]);
+		resetForm({values:''})
 	}
 
 	useEffect(() => {
