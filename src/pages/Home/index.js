@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
+import * as Yup from 'yup';
 
 import FormikForm from '../../components/FormikForm';
 import Player from '../../components/Player';
@@ -22,6 +23,18 @@ export default () => {
 		id: "soundUrl",
 		label: "Sound URL"
 	}];
+
+	const validationSchema= Yup.object().shape({
+                    
+        name: Yup.string()
+            .required('Please enter a button name'),
+		soundUrl: Yup.string()
+			.matches(/([a-zA-Z0-9\s_\\.\-\(\):])+(.wav|.ogg|.mp3)$/, {
+				message:'select a sound URL with .mp3, .ogg or .wav extension',
+				excludeEmptyString: true
+			})
+            .required('Please enter a valid sound URL')
+    });
 
 	const saveButton = () => {
 		localStorage.setItem(`buttons`, JSON.stringify(buttons));
@@ -47,10 +60,14 @@ export default () => {
 			{buttons.map((button, index) => <Player
 				key={index}
 				name={button.name}
-				url={button.soundUrl}></Player>)}
-			<FormikForm fieldValues={fieldValues}
+				url={button.soundUrl}>
+			</Player>)}
+
+			<FormikForm 
+				fieldValues={fieldValues}
 				initialValues={initialValues}
-				onSubmit={onSubmit}>
+				onSubmit={onSubmit}
+				validationSchema={validationSchema}>
 			</FormikForm>
 		</Container>
 	)
